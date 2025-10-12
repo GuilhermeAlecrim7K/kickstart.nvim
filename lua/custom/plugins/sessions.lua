@@ -64,9 +64,9 @@ return {
       ---@type SessionLensMappings
       mappings = {
         -- Mode can be a string or a table, e.g. {"i", "n"} for both insert and normal mode
-        delete_session = { 'n', '<C-d>' }, -- mode and key for deleting a session from the picker
-        alternate_session = { 'n', '<C-s>' }, -- mode and key for swapping to alternate session from the picker
-        copy_session = { 'i', '<C-y>' }, -- mode and key for copying a session from the picker
+        delete_session = { { 'i', 'n' }, '<C-d>' }, -- mode and key for deleting a session from the picker
+        alternate_session = { { 'i', 'n' }, '<C-s>' }, -- mode and key for swapping to alternate session from the picker
+        -- copy_session = { { 'i', 'n' }, '<C-y>' }, -- mode and key for copying a session from the picker
       },
 
       ---@type SessionControl
