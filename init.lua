@@ -72,6 +72,12 @@ vim.o.confirm = true
 -- Session options
 vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
 
+-- default value + sS
+vim.o.shortmess = 'ltToOCFsS'
+
+-- Disable visual selection count
+vim.o.showcmd = false
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
