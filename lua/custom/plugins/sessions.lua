@@ -14,10 +14,11 @@ return {
     -- Saving / restoring
     enabled = true, -- Enables/disables auto creating, saving and restoring
     auto_save = true, -- Enables/disables auto saving session on exit
-    auto_restore = false, -- Enables/disables auto restoring session on start
+    auto_restore = true, -- Enables/disables auto restoring session on start
     auto_create = true, -- Enables/disables auto creating new session files. Can be a function that returns true if a new session file should be allowed
     auto_restore_last_session = false, -- On startup, loads the last saved session if session for cwd does not exist
     cwd_change_handling = true, -- Automatically save/restore sessions when changing directories
+    -- NOTE: This may be what I want for my workflow.
     single_session_mode = false, -- Enable single session mode to keep all work in one session regardless of cwd changes. When enabled, prevents creation of separate sessions for different directories and maintains one unified session. Does not work with cwd_change_handling
 
     -- Filtering
@@ -48,12 +49,12 @@ return {
     -- Misc
     log_level = 'warn', -- Sets the log level of the plugin (debug, info, warn, error).
     root_dir = vim.fn.stdpath 'data' .. '/sessions/', -- Root dir where sessions will be stored
-    show_auto_restore_notif = false, -- Whether to show a notification when auto-restoring
+    show_auto_restore_notif = true, -- Whether to show a notification when auto-restoring
     restore_error_handler = nil, -- Function called when there's an error restoring. By default, it ignores fold errors otherwise it displays the error and returns false to disable auto_save
     continue_restore_on_error = true, -- Keep loading the session even if there's an error
     lsp_stop_on_restore = false, -- Should language servers be stopped when restoring a session. Can also be a function that will be called if set. Not called on autorestore from startup
     lazy_support = true, -- Automatically detect if Lazy.nvim is being used and wait until Lazy is done to make sure session is restored correctly. Does nothing if Lazy isn't being used
-    legacy_cmds = true, -- Define legacy commands: Session*, Autosession (lowercase s), currently true. Set to false to prevent defining them
+    legacy_cmds = false, -- Define legacy commands: Session*, Autosession (lowercase s), currently true. Set to false to prevent defining them
 
     ---@type SessionLens
     session_lens = {
