@@ -5,24 +5,10 @@ return {
     options = {
       theme = 'dracula',
     },
-    extensions = { 'oil' },
+    extensions = { 'oil', 'fzf', 'lazy', 'man', 'mason', 'quickfix' },
     sections = {
       lualine_a = { 'mode' },
       lualine_b = {
-        function()
-          local session_name = require('auto-session.lib').current_session_name(true)
-          if session_name and session_name ~= '' then
-            return 'Auto-Session: ' .. session_name
-          else
-            return 'Detached'
-          end
-        end,
-        'branch',
-        'diff',
-        'diagnostics',
-      },
-      -- TODO: Add a function to lualine_c that parses results from svn
-      lualine_c = {
         {
           'filename',
           file_status = true, -- Displays file status (readonly status, modified status)
@@ -43,9 +29,42 @@ return {
           },
         },
       },
-      lualine_x = { 'encoding', 'fileformat', 'filetype' },
-      lualine_y = { 'selectioncount', { 'searchcount', maxcount = 999999, timeout = 500 }, 'progress', 'location' },
-      lualine_z = { 'datetime' },
+      -- TODO: Add a function to one of the sections that parses results from svn
+      lualine_c = {
+        function()
+          local session_name = require('auto-session.lib').current_session_name(true)
+          if session_name and session_name ~= '' then
+            return '\u{1f517} ' .. session_name
+          else
+            return '\u{26aa}'
+          end
+        end,
+        'branch',
+        'diff',
+        'diagnostics',
+      },
+      lualine_x = {},
+      lualine_y = { 'encoding', 'fileformat', { 'filetype', icon_only = true } },
+      lualine_z = { 'selectioncount', { 'searchcount', maxcount = 999999, timeout = 500 }, 'progress', 'location' },
     },
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {
+      {
+        'filename',
+        file_status = true,
+        symbols = {
+          modified = '[+]', -- Text to show when the file is modified.
+          readonly = '[R]', -- Text to show when the file is non-modifiable or readonly.
+          unnamed = '[No Name]', -- Text to show for unnamed buffers.
+          newfile = '[New]', -- Text to show for newly created file before first write
+        },
+      },
+    },
+    lualine_x = { 'location' },
+    lualine_y = {},
+    lualine_z = {},
   },
 }
