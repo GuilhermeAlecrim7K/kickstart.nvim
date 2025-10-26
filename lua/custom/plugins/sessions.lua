@@ -1,6 +1,7 @@
 return {
   'rmagatti/auto-session',
   lazy = false,
+  priority = 999,
   keys = {
     { '<leader>as', '<cmd>AutoSession search<CR>', desc = 'Session search' },
     { '<leader>aw', '<cmd>AutoSession save<CR>', desc = 'Save session' },
