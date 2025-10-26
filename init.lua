@@ -78,6 +78,15 @@ vim.o.shortmess = 'ltToOCFsS'
 -- Disable visual selection count
 vim.o.showcmd = false
 
+-- Shell settings
+vim.o.shell = 'pwsh.exe'
+vim.o.shellquote = ''
+vim.o.shellxquote = ''
+vim.o.shellcmdflag =
+  '-NoLogo -NoProfile -Command $PSStyle.OutputRendering=[System.Management.Automation.OutputRendering]::PlainText;Remove-Alias -Name tee -Force -ErrorAction SilentlyContinue;'
+vim.o.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+vim.o.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
