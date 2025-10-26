@@ -1,3 +1,15 @@
+local toggleterm_extension = {
+  sections = {
+    lualine_a = { 'mode' },
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = { 'selectioncount', { 'searchcount', maxcount = 999999, timeout = 500 }, 'progress', 'location' },
+  },
+  filetypes = { 'toggleterm' },
+}
+
 return {
   'nvim-lualine/lualine.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons', 'rmagatti/auto-session' },
@@ -5,7 +17,7 @@ return {
     options = {
       theme = 'dracula',
     },
-    extensions = { 'oil', 'fzf', 'lazy', 'man', 'mason', 'quickfix' },
+    extensions = { 'oil', 'fzf', 'lazy', 'man', 'mason', 'quickfix', toggleterm_extension },
     sections = {
       lualine_a = { 'mode' },
       lualine_b = {
