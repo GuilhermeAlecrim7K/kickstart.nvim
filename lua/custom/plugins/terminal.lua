@@ -1,3 +1,5 @@
+local last_opened = nil
+
 local copilot_term = nil
 
 local function get_copilot_terminal()
@@ -11,6 +13,31 @@ local function get_copilot_terminal()
     }
   end
   return copilot_term
+end
+
+local claude_terminal = nil
+
+local function get_claude_terminal()
+  if claude_terminal == nil then
+    local Terminal = require('toggleterm.terminal').Terminal
+    claude_terminal = Terminal:new {
+      cmd = 'claude',
+      direction = 'vertical',
+      display_name = 'Claude Code',
+      close_on_exit = true,
+    }
+  end
+  return claude_terminal
+end
+
+local function new_shell(command, display_name)
+  local toggleterm_terminal = require 'toggleterm.terminal'
+  local Terminal = toggleterm_terminal.Terminal
+  return Terminal:new {
+    cmd = command,
+    display_name = display_name,
+    close_on_exit = true,
+  }
 end
 
 local main_shell = nil
@@ -64,6 +91,8 @@ return {
           return
         end
 
+        last_opened = term
+
         local function force_direction(new_direction)
           if not term:is_open() then
             term:open(nil, new_direction)
@@ -88,12 +117,41 @@ return {
 
     -- TODO: Personalize picker shortcuts (delete, rename?, open as float/vert/horiz)
     vim.keymap.set('n', '<leader>\\s', '<cmd>TermSelect<cr>', { desc = '[S]elect Terminal Session' })
-    vim.keymap.set('n', '<leader>\\t', '<cmd>ToggleTerm<cr>', { desc = 'Toggle [T]erminal' })
+    vim.keymap.set('n', '<leader>\\t', function()
+      if last_opened ~= nil then
+        last_opened:toggle()
+      else
+        get_main_shell():toggle()
+      end
+    end, { desc = '[T]oggle Most Recent Terminal or Main' })
+
     vim.keymap.set('n', '<leader>\\m', function()
       get_main_shell():toggle()
     end, { desc = 'Toggle [M]ain Shell Terminal' })
-    vim.keymap.set('n', '<leader>\\c', function()
+
+    vim.keymap.set('n', '<leader>\\g', function()
       get_copilot_terminal():toggle()
-    end, { desc = 'Toggle [C]opilot Terminal' })
+    end, { desc = 'Toggle [G]ithub Copilot CLI' })
+
+    vim.keymap.set('n', '<leader>\\c', function()
+      get_claude_terminal():toggle()
+    end, { desc = 'Toggle [C]laude Code' })
+
+    vim.keymap.set('n', '<leader>\\n', function()
+      local shell_cmd = vim.fn.input('Enter shell command: ', '', 'file')
+      if shell_cmd == '' then
+        print 'No command entered. Aborting terminal creation.'
+        return
+      end
+      -- Extract just the command name (without arguments)
+      local cmd_name = shell_cmd:match '^(%S+)'
+      if vim.fn.executable(cmd_name) == 0 then
+        print('Error: "' .. cmd_name .. '" is not executable or not found in PATH.')
+        return
+      end
+      local display_name = vim.fn.input('Enter terminal display name: ', shell_cmd, 'file')
+      local new_terminal = new_shell(shell_cmd, display_name)
+      new_terminal:open()
+    end, { desc = 'Spawn [N]ew Custom Terminal' })
   end,
 }
