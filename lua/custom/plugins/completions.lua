@@ -43,7 +43,7 @@ return { -- Autocompletion
 
       ['<C-j>'] = { 'show', 'show_documentation', 'hide_documentation', 'fallback' },
       ['<C-e>'] = { 'hide', 'fallback' },
-      ['<CR>'] = { 'select_and_accept', 'fallback' },
+      ['<CR>'] = { 'fallback' },
       ['<C-y>'] = { 'select_and_accept', 'fallback' },
 
       ['<Up>'] = { 'select_prev', 'fallback' },
@@ -85,6 +85,10 @@ return { -- Autocompletion
       },
       ghost_text = {
         enabled = true,
+        show_with_menu = false,
+        show_with_selection = true,
+        show_without_menu = false,
+        show_without_selection = false,
       },
     },
 
