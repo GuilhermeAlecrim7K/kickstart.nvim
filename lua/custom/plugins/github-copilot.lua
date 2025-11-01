@@ -1,6 +1,13 @@
 return {
   'zbirenbaum/copilot.lua',
-  dependencies = { 'copilotlsp-nvim/copilot-lsp' },
+  dependencies = {
+    {
+      'copilotlsp-nvim/copilot-lsp',
+      init = function()
+        vim.g.copilot_nes_debounce = 3000
+      end,
+    },
+  },
   cmd = 'Copilot',
   event = 'InsertEnter',
   lazy = true,
