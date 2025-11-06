@@ -89,6 +89,10 @@ vim.o.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
 
 vim.g.editorconfig = true
 
+vim.o.foldlevelstart = 99 -- open all folds by default
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
