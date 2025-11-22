@@ -5,11 +5,21 @@ local copilot_term = nil
 local function get_copilot_terminal()
   if copilot_term == nil then
     local Terminal = require('toggleterm.terminal').Terminal
+
+    local should_resume = vim.fn.input 'Resume a previous session? (y/n): '
+    local cmd = 'copilot'
+    if should_resume:lower() == 'y' then
+      cmd = 'copilot --resume'
+    end
     copilot_term = Terminal:new {
-      cmd = 'copilot',
+      cmd = cmd,
       direction = 'vertical',
       display_name = 'Copilot CLI',
       close_on_exit = true,
+      on_close = function()
+        -- Force the prompt again next time
+        copilot_term = nil
+      end,
     }
   end
   return copilot_term
