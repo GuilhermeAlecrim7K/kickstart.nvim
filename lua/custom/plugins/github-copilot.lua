@@ -15,6 +15,7 @@ return {
     filetypes = {
       ['*'] = false,
       c = true,
+      cs = true,
       c_sharp = true,
       cpp = true,
       css = true,
@@ -62,7 +63,8 @@ return {
       },
     },
     nes = {
-      enabled = true, -- requires copilot-lsp as a dependency
+      -- BUG: Working terribly. NES always suggests code that I've already written.
+      enabled = false, -- requires copilot-lsp as a dependency
       auto_trigger = true,
       keymap = {
         accept_and_goto = '<M-k>',
