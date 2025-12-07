@@ -79,7 +79,11 @@ vim.o.shortmess = 'ltToOCFsS'
 vim.o.showcmd = false
 
 -- Shell settings
-vim.o.shell = 'pwsh.exe'
+local shellCmd = 'pwsh'
+if vim.fn.has("win32") == 1 then
+  shellCmd = 'pwsh.exe'
+end
+vim.o.shell = shellCmd
 vim.o.shellquote = ''
 vim.o.shellxquote = ''
 vim.o.shellcmdflag =
