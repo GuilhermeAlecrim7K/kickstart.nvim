@@ -80,16 +80,20 @@ vim.o.showcmd = false
 
 -- Shell settings
 local shellCmd = 'pwsh'
-if vim.fn.has("win32") == 1 then
+if vim.fn.has 'win32' == 1 then
   shellCmd = 'pwsh.exe'
 end
-vim.o.shell = shellCmd
-vim.o.shellquote = ''
-vim.o.shellxquote = ''
-vim.o.shellcmdflag =
-  '-NoLogo -NoProfile -Command $PSStyle.OutputRendering=[System.Management.Automation.OutputRendering]::PlainText;Remove-Alias -Name tee -Force -ErrorAction SilentlyContinue;'
-vim.o.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
-vim.o.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
+
+-- Check for pwsh. If not installed just fallback to regular shell settings.
+if vim.fn.has(shellCmd) == 1 then
+  vim.o.shell = shellCmd
+  vim.o.shellquote = ''
+  vim.o.shellxquote = ''
+  vim.o.shellcmdflag =
+    '-NoLogo -NoProfile -Command $PSStyle.OutputRendering=[System.Management.Automation.OutputRendering]::PlainText;Remove-Alias -Name tee -Force -ErrorAction SilentlyContinue;'
+  vim.o.shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+  vim.o.shellpipe = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
+end
 
 vim.g.editorconfig = true
 

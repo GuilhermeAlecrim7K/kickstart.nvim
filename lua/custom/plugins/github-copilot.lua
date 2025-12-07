@@ -1,5 +1,8 @@
 return {
   'zbirenbaum/copilot.lua',
+  enabled = function()
+    return vim.fn.has 'copilot' == 1
+  end,
   dependencies = {
     {
       'copilotlsp-nvim/copilot-lsp',

@@ -139,13 +139,17 @@ return {
       get_main_shell():toggle()
     end, { desc = 'Toggle [M]ain Shell Terminal' })
 
-    vim.keymap.set('n', '<leader>\\g', function()
-      get_copilot_terminal():toggle()
-    end, { desc = 'Toggle [G]ithub Copilot CLI' })
+    if vim.fn.has 'copilot' == 1 then
+      vim.keymap.set('n', '<leader>\\g', function()
+        get_copilot_terminal():toggle()
+      end, { desc = 'Toggle [G]ithub Copilot CLI' })
+    end
 
-    vim.keymap.set('n', '<leader>\\c', function()
-      get_claude_terminal():toggle()
-    end, { desc = 'Toggle [C]laude Code' })
+    if vim.fn.has 'claude' == 1 then
+      vim.keymap.set('n', '<leader>\\c', function()
+        get_claude_terminal():toggle()
+      end, { desc = 'Toggle [C]laude Code' })
+    end
 
     vim.keymap.set('n', '<leader>\\n', function()
       local shell_cmd = vim.fn.input('Enter shell command: ', '', 'file')
