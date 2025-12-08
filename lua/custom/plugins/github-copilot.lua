@@ -1,7 +1,15 @@
 return {
   'zbirenbaum/copilot.lua',
   enabled = function()
-    return vim.fn.has 'copilot' == 1
+    local hasNode = vim.fn.executable 'node' == 1
+    if hasNode then
+      local nodeVersion = vim.fn.systemlist 'node -v'[1]:gsub('v', '')
+      local majorVersion = tonumber(nodeVersion:match('^(%d+)'))
+      if majorVersion and majorVersion >= 22 then
+        return true
+      end
+    end
+    return false
   end,
   dependencies = {
     {
