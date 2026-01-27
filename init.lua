@@ -153,5 +153,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 require 'config.lazy'
 
+require 'custom.lsp.pascal_ls'
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
