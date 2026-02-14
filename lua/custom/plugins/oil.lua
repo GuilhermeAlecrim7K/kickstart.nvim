@@ -32,6 +32,9 @@ return {
       ['g.'] = { 'actions.toggle_hidden', mode = 'n' },
       ['g\\'] = { 'actions.toggle_trash', mode = 'n' },
     },
+    view_options = {
+      show_hidden = true,
+    }
   },
   dependencies = { { 'nvim-mini/mini.icons', opts = {} } },
   lazy = false,
