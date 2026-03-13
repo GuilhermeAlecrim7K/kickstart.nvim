@@ -12,8 +12,29 @@ vim.g.have_nerd_font = true
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
+-- Set absolute line numbers as the default global behavior for new buffers
 vim.o.number = true
-vim.o.relativenumber = true
+vim.o.relativenumber = false
+
+-- Autocommand to switch to relative numbers when the current window is focused
+vim.api.nvim_create_autocmd({"WinEnter", "FocusGained", "InsertLeave"}, {
+  group = vim.api.nvim_create_augroup("LineNumberToggle", {clear = true}),
+  callback = function()
+    -- Set relative number for the active window
+    if vim.wo.number then
+      vim.wo.relativenumber = true
+    end
+  end
+})
+
+-- Autocommand to switch back to absolute numbers when the window loses focus or entering insert mode
+vim.api.nvim_create_autocmd({"WinLeave", "FocusLost", "InsertEnter"}, {
+  group = vim.api.nvim_create_augroup("LineNumberToggle", {clear = false}),
+  callback = function()
+    -- Set absolute number (non-relative) for inactive windows
+    vim.wo.relativenumber = false
+  end
+})
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
