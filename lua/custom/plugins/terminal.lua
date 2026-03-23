@@ -139,13 +139,13 @@ return {
       get_main_shell():toggle()
     end, { desc = 'Toggle [M]ain Shell Terminal' })
 
-    if vim.fn.has 'copilot' == 1 then
+    if vim.fn.executable 'copilot' == 1 then
       vim.keymap.set('n', '<leader>\\g', function()
         get_copilot_terminal():toggle()
       end, { desc = 'Toggle [G]ithub Copilot CLI' })
     end
 
-    if vim.fn.has 'claude' == 1 then
+    if vim.fn.executable 'claude' == 1 then
       vim.keymap.set('n', '<leader>\\c', function()
         get_claude_terminal():toggle()
       end, { desc = 'Toggle [C]laude Code' })

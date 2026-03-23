@@ -106,7 +106,7 @@ if vim.fn.has 'win32' == 1 then
 end
 
 -- Check for pwsh. If not installed just fallback to regular shell settings.
-if vim.fn.has(shellCmd) == 1 then
+if vim.fn.executable(shellCmd) == 1 then
   vim.o.shell = shellCmd
   vim.o.shellquote = ''
   vim.o.shellxquote = ''
