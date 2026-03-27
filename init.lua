@@ -160,6 +160,9 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- Map leader-tab to toggle between buffers
 vim.keymap.set('n', '<leader><tab>', '<C-6>', { desc = 'Toggle to previous buffer' })
 
+-- Map leader-c to close the current window
+vim.keymap.set("n", "<leader>c", "<cmd>close<CR>", { desc = "Force close window" })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
