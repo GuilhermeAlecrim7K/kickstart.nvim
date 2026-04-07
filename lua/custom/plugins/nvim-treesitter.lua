@@ -52,7 +52,6 @@ return {
 
       -- enables treesitter based folds
       -- for more info on folds see `:help folds`
-      vim.o.foldlevelstart = 99 -- open all folds by default
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
       vim.wo.foldmethod = 'expr'
 
