@@ -40,6 +40,7 @@ return {
       pas = true,
       pascal = true,
       powershell = true,
+      ps1 = true,
       python = true,
       vim = true,
     },
