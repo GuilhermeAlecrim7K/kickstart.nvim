@@ -17,23 +17,23 @@ vim.o.number = true
 vim.o.relativenumber = false
 
 -- Autocommand to switch to relative numbers when the current window is focused
-vim.api.nvim_create_autocmd({"WinEnter", "FocusGained", "InsertLeave"}, {
-  group = vim.api.nvim_create_augroup("LineNumberToggle", {clear = true}),
+vim.api.nvim_create_autocmd({ 'WinEnter', 'FocusGained', 'InsertLeave' }, {
+  group = vim.api.nvim_create_augroup('LineNumberToggle', { clear = true }),
   callback = function()
     -- Set relative number for the active window
     if vim.wo.number then
       vim.wo.relativenumber = true
     end
-  end
+  end,
 })
 
 -- Autocommand to switch back to absolute numbers when the window loses focus or entering insert mode
-vim.api.nvim_create_autocmd({"WinLeave", "FocusLost", "InsertEnter"}, {
-  group = vim.api.nvim_create_augroup("LineNumberToggle", {clear = false}),
+vim.api.nvim_create_autocmd({ 'WinLeave', 'FocusLost', 'InsertEnter' }, {
+  group = vim.api.nvim_create_augroup('LineNumberToggle', { clear = false }),
   callback = function()
     -- Set absolute number (non-relative) for inactive windows
     vim.wo.relativenumber = false
-  end
+  end,
 })
 
 -- Enable mouse mode, can be useful for resizing splits for example!
@@ -91,7 +91,7 @@ vim.o.scrolloff = 7
 vim.o.confirm = true
 
 -- Session options
-vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
+vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,localoptions'
 
 -- default value + sS
 vim.o.shortmess = 'ltToOCFsS'
@@ -106,7 +106,7 @@ if vim.fn.has 'win32' == 1 then
 end
 
 -- Check for pwsh. If not installed just fallback to regular shell settings.
-if vim.fn.executable(shellCmd) == 1 then
+if (vim.fn.has 'win32' == 1) and (vim.fn.executable(shellCmd) == 1) then
   vim.o.shell = shellCmd
   vim.o.shellquote = ''
   vim.o.shellxquote = ''
@@ -159,7 +159,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('n', '<leader><tab>', '<C-6>', { desc = 'Toggle to previous buffer' })
 
 -- Map leader-c to close the current window
-vim.keymap.set("n", "<leader>c", "<cmd>close<CR>", { desc = "Force close window" })
+vim.keymap.set('n', '<leader>c', '<cmd>close<CR>', { desc = 'Force close window' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
