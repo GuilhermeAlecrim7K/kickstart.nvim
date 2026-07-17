@@ -175,6 +175,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- User command to set legacy Delphi-friendly encoding and line endings
+vim.api.nvim_create_user_command('Latin1Dos', function()
+  vim.bo.fileencoding = 'latin1'
+  vim.bo.fileformat = 'dos'
+end, { desc = 'Set fileencoding=latin1 and fileformat=dos' })
+
 require 'config.lazy'
 
 require 'custom.lsp.pascal_ls'
