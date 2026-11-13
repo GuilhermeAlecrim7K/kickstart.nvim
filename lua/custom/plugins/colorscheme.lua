@@ -10,6 +10,7 @@ return {
     ---@diagnostic disable-next-line: missing-fields
     require('tokyonight').setup {
       style = 'moon',
+      light_style = 'day',
       transparent = true,
       styles = {
         comments = { italic = true },
@@ -20,8 +21,8 @@ return {
     }
 
     -- Load the colorscheme here.
-    -- Like many other themes, this one has different styles, and you could load
-    -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-    vim.cmd.colorscheme 'tokyonight-moon'
+    -- Plain 'tokyonight' follows 'background': `style` when dark, `light_style` when light.
+    -- Nvim sets 'background' at startup from the terminal's reported background color.
+    vim.cmd.colorscheme 'tokyonight'
   end,
 }
