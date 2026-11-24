@@ -1,35 +1,30 @@
 local last_opened = nil
 
-local copilot_term = nil
-
-local function get_copilot_terminal()
-  if copilot_term == nil then
-    local Terminal = require('toggleterm.terminal').Terminal
-
-    local cmd = 'copilot'
-    copilot_term = Terminal:new {
-      cmd = cmd,
-      direction = 'vertical',
-      display_name = 'Copilot CLI',
-      close_on_exit = true,
-    }
-  end
-  return copilot_term
-end
-
 local claude_terminal = nil
 
-local function get_claude_terminal()
-  if claude_terminal == nil then
-    local Terminal = require('toggleterm.terminal').Terminal
-    claude_terminal = Terminal:new {
-      cmd = 'claude',
-      direction = 'vertical',
-      display_name = 'Claude Code',
-      close_on_exit = true,
-    }
+local function toggle_claude_terminal()
+  if claude_terminal ~= nil then
+    claude_terminal:toggle()
+    return
   end
-  return claude_terminal
+
+  -- No running session: ask whether to start a new one or resume a previous one
+  local choice = vim.fn.confirm('Claude Code session', '&New\n&Resume', 1)
+  if choice == 0 then
+    return
+  end
+
+  local Terminal = require('toggleterm.terminal').Terminal
+  claude_terminal = Terminal:new {
+    cmd = choice == 2 and 'claude --resume' or 'claude',
+    direction = 'float',
+    display_name = 'Claude Code',
+    close_on_exit = true,
+    on_exit = function()
+      claude_terminal = nil
+    end,
+  }
+  claude_terminal:toggle()
 end
 
 local function new_shell(command, display_name)
@@ -131,16 +126,8 @@ return {
       get_main_shell():toggle()
     end, { desc = 'Toggle [M]ain Shell Terminal' })
 
-    if vim.fn.executable 'copilot' == 1 then
-      vim.keymap.set('n', '<leader>\\g', function()
-        get_copilot_terminal():toggle()
-      end, { desc = 'Toggle [G]ithub Copilot CLI' })
-    end
-
     if vim.fn.executable 'claude' == 1 then
-      vim.keymap.set('n', '<leader>\\c', function()
-        get_claude_terminal():toggle()
-      end, { desc = 'Toggle [C]laude Code' })
+      vim.keymap.set('n', '<leader>\\c', toggle_claude_terminal, { desc = 'Toggle [C]laude Code' })
     end
 
     vim.keymap.set('n', '<leader>\\n', function()
